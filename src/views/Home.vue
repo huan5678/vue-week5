@@ -1,18 +1,18 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { onMounted } from 'vue';
+// import { useRouter } from 'vue-router';
+// import useStore from '@/stores';
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+  setup() {
+    // const router = useRouter();
+
+    // const {  } = useStore();
+
+    onMounted(() => {});
+  },
+};
 </script>
+<template>
+  <h1>這裡是HERO</h1>
+</template>

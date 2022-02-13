@@ -1,24 +1,10 @@
-# week5
+# 套件使用
 
-## Project setup
-```
-yarn install
-```
+- 使用 VeeValidate 套件完成表單驗證功能，操作文件（無 ESM 版本）
+- 使用 loading 套件製作 loading 效果
+- 串接前台 API 完成購物車功能
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## 額外使用套件
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 使用 Vue FinalModal 取代原先的 modal 寫法
+- 使用 sweetalert2 來做 api 回饋提示
