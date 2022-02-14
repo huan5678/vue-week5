@@ -1,6 +1,6 @@
 <script>
 import useStore from '@/stores';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 export default {
   setup() {
     const { cartStore } = useStore();
@@ -16,6 +16,13 @@ export default {
       qty !== undefined && (num = num * qty);
       return num !== undefined ? Number(num.toFixed(1)).toLocaleString() : 0;
     }
+
+    watch(
+      () => cartData.cart,
+      (newValue) => {
+        newValue.length > 0 && handleGetCart();
+      }
+    );
 
     onMounted(() => {
       handleGetCart();
@@ -65,8 +72,8 @@ export default {
           <td class="text-right">
             <select
               class="rounded"
-              v-model="cart.product.qty"
-              @change="handleUpdateCart(cart.id, cart.product.qty)"
+              v-model="cart.qty"
+              @change="handleUpdateCart(cart.id, cart.qty)"
             >
               <option v-for="i in 20" :value="i" :key="i + cart.product.id">
                 {{ i }}
@@ -75,9 +82,9 @@ export default {
           </td>
           <td class="text-right">
             <span class="block line-through text-sm">
-              NT${{ moneyFormat(cart.product.origin_price, cart.product.qty) }}
+              NT${{ moneyFormat(cart.product.origin_price, cart.qty) }}
             </span>
-            NT${{ moneyFormat(cart.product.price, cart.product.qty) }}
+            NT${{ moneyFormat(cart.product.price, cart.qty) }}
           </td>
           <td class="text-center">
             <button class="" @click="handleDeleteCart(cart.id)">

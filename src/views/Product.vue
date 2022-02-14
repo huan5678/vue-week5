@@ -1,13 +1,17 @@
 <script>
 import ProductsList from '@/components/ProductsList.vue';
 import CartList from '@/components/CartList.vue';
+import OrderForm from '@/components/OrderForm.vue';
 export default {
-  components: { ProductsList, CartList },
+  components: { ProductsList, CartList, OrderForm },
   setup() {},
 };
 </script>
 
 <template>
-  <ProductsList />
-  <CartList />
+  <div>
+    <ProductsList />
+    <CartList />
+    <OrderForm />
+  </div>
 </template>

@@ -12,10 +12,10 @@ export const useCartStore = defineStore('cart', function() {
     finalPrice: 0,
   });
 
-  const isLoading = ref(false);
+  const isLoading = ref('');
 
   function handleAddCart(id, qty = 1) {
-    isLoading.value = true;
+    isLoading.value = id;
     Api({
       method: 'post',
       url: `api/${apiPath}/cart`,
@@ -30,11 +30,12 @@ export const useCartStore = defineStore('cart', function() {
         // console.log(res.data);
         cartData.data = res.data.data;
         cartData.message = res.data.message;
-        isLoading.value = false;
+        isLoading.value = '';
+        handleGetCart();
       })
       .catch((err) => {
         console.dir(err);
-        isLoading.value = false;
+        isLoading.value = '';
       });
   }
 
@@ -55,7 +56,7 @@ export const useCartStore = defineStore('cart', function() {
   }
 
   function handleDeleteCart(id) {
-    isLoading.value = true;
+    isLoading.value = id;
     Api({
       method: 'delete',
       url: `api/${apiPath}/cart/${id}`,
@@ -63,16 +64,17 @@ export const useCartStore = defineStore('cart', function() {
       .then((res) => {
         // console.log(res.data);
         cartData.message = res.data.message;
-        isLoading.value = false;
+        isLoading.value = '';
+        handleGetCart();
       })
       .catch((err) => {
         console.dir(err);
-        isLoading.value = false;
+        isLoading.value = '';
       });
   }
 
   function handleUpdateCart(id, qty) {
-    isLoading.value = true;
+    isLoading.value = id;
     Api({
       method: 'put',
       url: `api/${apiPath}/cart/${id}`,
@@ -86,16 +88,16 @@ export const useCartStore = defineStore('cart', function() {
       .then((res) => {
         // console.log(res.data);
         cartData.message = res.data.message;
-        isLoading.value = false;
+        isLoading.value = '';
+        handleGetCart();
       })
       .catch((err) => {
         console.dir(err);
-        isLoading.value = false;
+        isLoading.value = '';
       });
   }
 
   function handleClearCart() {
-    isLoading.value = true;
     Api({
       method: 'delete',
       url: `api/${apiPath}/carts`,
@@ -103,11 +105,10 @@ export const useCartStore = defineStore('cart', function() {
       .then((res) => {
         // console.log(res.data);
         cartData.message = res.data.message;
-        isLoading.value = false;
+        handleGetCart();
       })
       .catch((err) => {
         console.dir(err);
-        isLoading.value = false;
       });
   }
 

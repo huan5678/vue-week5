@@ -4,13 +4,6 @@ import { Api } from '@/api';
 
 export const useOrderStore = defineStore('order', function() {
   const apiPath = process.env.VUE_APP_API_PATH;
-  const orderData = reactive({
-    name: '',
-    email: '',
-    tel: '',
-    address: '',
-    message: '',
-  });
   const orderResult = reactive({
     success: false,
     message: '',
@@ -25,18 +18,18 @@ export const useOrderStore = defineStore('order', function() {
     message: [],
   });
 
-  function handleSendOrder() {
+  function handleSendOrder(data) {
     Api({
       method: 'post',
       url: `api/${apiPath}/order`,
       data: {
         user: {
-          name: orderData.name,
-          email: orderData.email,
-          tel: orderData.tel,
-          address: orderData.address,
+          name: data.name,
+          email: data.email,
+          tel: data.tel,
+          address: data.address,
         },
-        message: orderData.message,
+        message: data.message,
       },
     })
       .then((res) => {
@@ -70,7 +63,6 @@ export const useOrderStore = defineStore('order', function() {
   }
 
   return {
-    orderData,
     orderResult,
     orderList,
     handleSendOrder,
