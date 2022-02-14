@@ -1,39 +1,55 @@
 <script>
+import { computed } from 'vue';
+import useStore from '@/stores';
+
 export default {
-  setup(props, context) {
-    const product = context.attrs.product;
+  props: ['product'],
+  setup(props) {
+    const product = { ...props.product };
+    const { cartStore } = useStore();
+    const { handleAddCart } = cartStore;
+
     return {
-      product,
+      products: product,
+      handleAddCart,
+      isLoading: computed(() => cartStore.isLoading),
     };
   },
 };
 </script>
 
 <template>
-  <li class="relative flex flex-col">
-    <div class="group cursor-pointer">
-      <div class="overflow-clip">
-        <img
-          :src="product.images"
-          :alt="product.title"
-          class="w-full object-cover transition-all duration-700 ease-out group-hover:scale-110"
-        />
-      </div>
-      <div class="overflow-clip">
-        <button
-          type="button"
-          class="w-full bg-black text-white grid place-content-center text-xl py-3 mb-2 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:bg-secondary-900"
-        >
-          加入購物車
-        </button>
-      </div>
+  <div class="cursor-pointer group">
+    <div class="overflow-clip">
+      <img
+        :src="products.imageUrl"
+        :alt="products.title"
+        class="w-full object-cover transition-all duration-700 ease-out group-hover:scale-110"
+      />
     </div>
-    <h2 class="text-xl">{{ product.title }}</h2>
-    <h3 class="text-h2 mt-auto">
-      <span class="block text-xl line-through">
-        {{ product.origin_price }}
-      </span>
-      {{ product.price }}
-    </h3>
-  </li>
+    <ul class="p-4 space-y-4">
+      <li>
+        <h2 class="text-xl text-center">{{ products.title }}</h2>
+      </li>
+      <li class="flex justify-between">
+        <span>原價</span>
+        <span class="line-through">
+          {{ products.origin_price }}
+        </span>
+      </li>
+      <li class="flex justify-between">
+        <span>特價</span>
+        <span class="text-xl">{{ products.price }}</span>
+      </li>
+    </ul>
+  </div>
+  <button
+    type="button"
+    class="w-full bg-black text-white grid place-content-center text-xl py-3 transition-all duration-500 ease-in-out hover:scale-110 hover:bg-secondary-900"
+    :class="isLoading ? 'opacity-10' : ''"
+    :disabled="isLoading"
+    @click="handleAddCart(products.id)"
+  >
+    加入購物車
+  </button>
 </template>

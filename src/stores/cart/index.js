@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { Api } from '@/api';
 
@@ -10,28 +10,31 @@ export const useCartStore = defineStore('cart', function() {
     list: [],
     totalPrice: 0,
     finalPrice: 0,
-    isLoading: false,
   });
 
+  const isLoading = ref(false);
+
   function handleAddCart(id, qty = 1) {
-    cartData.isLoading = true;
+    isLoading.value = true;
     Api({
       method: 'post',
       url: `api/${apiPath}/order`,
       data: {
-        product_id: id,
-        qty,
+        data: {
+          product_id: id,
+          qty,
+        },
       },
     })
       .then((res) => {
         // console.log(res.data);
         cartData.data = res.data.data;
         cartData.message = res.data.message;
-        cartData.isLoading = false;
+        isLoading.value = false;
       })
       .catch((err) => {
         console.dir(err);
-        cartData.isLoading = false;
+        isLoading.value = false;
       });
   }
 
@@ -52,7 +55,7 @@ export const useCartStore = defineStore('cart', function() {
   }
 
   function handleDeleteCart(id) {
-    cartData.isLoading = true;
+    isLoading.value = true;
     Api({
       method: 'delete',
       url: `api/${apiPath}/cart/${id}`,
@@ -60,16 +63,16 @@ export const useCartStore = defineStore('cart', function() {
       .then((res) => {
         // console.log(res.data);
         cartData.message = res.data.message;
-        cartData.isLoading = false;
+        isLoading.value = false;
       })
       .catch((err) => {
         console.dir(err);
-        cartData.isLoading = false;
+        isLoading.value = false;
       });
   }
 
   function handleUpdateCart(id, qty) {
-    cartData.isLoading = true;
+    isLoading.value = true;
     Api({
       method: 'put',
       url: `api/${apiPath}/cart/${id}`,
@@ -83,16 +86,16 @@ export const useCartStore = defineStore('cart', function() {
       .then((res) => {
         // console.log(res.data);
         cartData.message = res.data.message;
-        cartData.isLoading = false;
+        isLoading.value = false;
       })
       .catch((err) => {
         console.dir(err);
-        cartData.isLoading = false;
+        isLoading.value = false;
       });
   }
 
   function handleClearCart() {
-    cartData.isLoading = true;
+    isLoading.value = true;
     Api({
       method: 'delete',
       url: `api/${apiPath}/carts`,
@@ -100,16 +103,17 @@ export const useCartStore = defineStore('cart', function() {
       .then((res) => {
         // console.log(res.data);
         cartData.message = res.data.message;
-        cartData.isLoading = false;
+        isLoading.value = false;
       })
       .catch((err) => {
         console.dir(err);
-        cartData.isLoading = false;
+        isLoading.value = false;
       });
   }
 
   return {
     cartData,
+    isLoading,
     handleAddCart,
     handleGetCart,
     handleDeleteCart,

@@ -12,53 +12,62 @@ export default {
       productList,
       handleGetProductList,
       productCategory,
-      handleGetProductCategory,
+      handleGetProductAll,
+      isLoading,
     } = productStore;
     const selectCategory = ref('');
     onMounted(() => {
-      handleGetProductCategory();
-      handleGetProductList();
+      handleGetProductAll();
     });
 
     const handleCategoryChange = function() {
-      handleGetProductList(selectCategory.value);
+      selectCategory.value === 'All'
+        ? handleGetProductAll()
+        : handleGetProductList(selectCategory.value);
     };
 
     return {
       selectCategory,
-      productList: computed(() => productList),
+      productList: computed(() => productList.products),
       productCategory: computed(() => productCategory),
       handleCategoryChange,
+      isLoading: computed(() => isLoading),
     };
   },
 };
 </script>
 
 <template>
-  <section className="container mb-14">
-    <select
-      className="border rounded py-2 px-3 w-3/12 mb-8"
-      @change="handleCategoryChange"
-      defaultValue=""
-      v-model="selectCategory"
-    >
-      <option value="All">全部</option>
-      <option
-        v-for="category in productCategory"
-        :key="category"
-        :value="category"
+  <section class="container mb-14">
+    <div class="flex items-center gap-2 mb-6">
+      <label for="category" class="text-xl">選擇篩選項目</label>
+      <select
+        id="category"
+        class="border rounded py-2 w-3/12 text-md"
+        @change="handleCategoryChange"
+        defaultValue="All"
+        v-model="selectCategory"
+        :disabled="isLoading"
       >
-        {{ category }}
-      </option>
-    </select>
-    <ul
-      className="grid md:grid-cols-3 lg:grid-cols-4 place-content-stretch align-items-stretch gap-[30px]"
-    >
-      <ProductCard
+        <option value="" selected disabled>請選擇</option>
+        <option value="All">全部</option>
+        <option
+          v-for="category in productCategory"
+          :key="category"
+          :value="category"
+        >
+          {{ category }}
+        </option>
+      </select>
+    </div>
+    <ul class="flex flex-wrap justify-between items-stretch gap-4">
+      <li
+        class="relative lg:w-1/4 md:w-1/2 rounded-md shadow overflow-hidden -mx-6 flex flex-col justify-between"
         v-for="product in productList"
         :key="product.id"
-        :product="product"
-      />
+      >
+        <ProductCard :product="product" />
+      </li>
     </ul>
   </section>
 </template>
