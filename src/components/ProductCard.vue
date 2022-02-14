@@ -46,7 +46,7 @@ export default {
   <button
     type="button"
     class="w-full bg-black text-white grid place-content-center text-xl py-3 transition-all duration-500 ease-in-out hover:scale-110 hover:bg-secondary-900"
-    :class="isLoading ? 'opacity-10' : ''"
+    :class="isLoading ? 'bg-gray-300 hover:bg-gray-300' : ''"
     :disabled="isLoading"
     @click="handleAddCart(products.id)"
   >

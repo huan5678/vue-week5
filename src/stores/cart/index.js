@@ -18,7 +18,7 @@ export const useCartStore = defineStore('cart', function() {
     isLoading.value = true;
     Api({
       method: 'post',
-      url: `api/${apiPath}/order`,
+      url: `api/${apiPath}/cart`,
       data: {
         data: {
           product_id: id,
