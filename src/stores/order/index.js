@@ -1,8 +1,10 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 import { Api } from '@/api';
+import { useCartStore } from '../cart';
 
 export const useOrderStore = defineStore('order', function() {
+  const { handleGetCart } = useCartStore();
   const apiPath = process.env.VUE_APP_API_PATH;
   const orderResult = reactive({
     success: false,
@@ -23,13 +25,15 @@ export const useOrderStore = defineStore('order', function() {
       method: 'post',
       url: `api/${apiPath}/order`,
       data: {
-        user: {
-          name: data.name,
-          email: data.email,
-          tel: data.tel,
-          address: data.address,
+        data: {
+          user: {
+            name: data.name,
+            email: data.email,
+            tel: data.tel,
+            address: data.address,
+          },
+          message: data.message,
         },
-        message: data.message,
       },
     })
       .then((res) => {
@@ -39,6 +43,7 @@ export const useOrderStore = defineStore('order', function() {
         orderResult.total = res.data.total;
         orderResult.create_at = res.data.create_at;
         orderResult.orderId = res.data.orderId;
+        handleGetCart();
       })
       .catch((err) => {
         console.dir(err);

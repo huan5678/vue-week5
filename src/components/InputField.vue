@@ -40,6 +40,10 @@ export default {
       type: String,
       default: '',
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     // we don't provide any rules here because we are using form-level validation
@@ -80,6 +84,7 @@ export default {
       :minlength="Number.parseInt(minlength)"
       :value="inputValue"
       :placeholder="placeholder"
+      :disabled="disabled"
       @input="handleChange"
       @blur="handleBlur"
     />

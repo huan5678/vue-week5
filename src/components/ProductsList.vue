@@ -40,7 +40,7 @@ export default {
 <template>
   <section class="container mb-14">
     <div class="flex items-center gap-2 mb-6">
-      <label for="category" class="text-xl">選擇篩選項目</label>
+      <label for="category" class="text-xl">選擇分類項目</label>
       <select
         id="category"
         class="border rounded py-2 w-3/12 text-md"

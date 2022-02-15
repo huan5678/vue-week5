@@ -34,7 +34,7 @@ export default {
 </script>
 
 <template>
-  <div class="cursor-pointer group" @click="handleOpenProductModal">
+  <div class="cursor-pointer group h-full" @click="handleOpenProductModal">
     <div class="overflow-clip">
       <img
         :src="products.imageUrl"

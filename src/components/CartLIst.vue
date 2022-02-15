@@ -44,7 +44,7 @@ export default {
   <section class="bg-gray-light pt-12 pb-18">
     <h2 class="text-center text-2xl mb-8">購物車</h2>
     <table class="container">
-      <thead>
+      <thead class="border-b-2 border-secondary-700">
         <tr>
           <th class="text-xl font-normal text-left w-4/12">品項</th>
           <th class="text-xl font-normal text-right w-2/12">單價</th>
@@ -120,11 +120,11 @@ export default {
               您的購物車是空的
             </p>
           </td>
-          <td class="text-center">
+          <td class="text-center" v-show="cartList.length > 0">
             <span class="block line-through text-sm">原始總金額</span>
             總金額
           </td>
-          <td class="text-center">
+          <td class="text-center" v-show="cartList.length > 0">
             <span class="block line-through text-sm">
               NT${{ cartTotalPrice }}
             </span>

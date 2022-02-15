@@ -1,5 +1,5 @@
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import useStore from '@/stores';
@@ -10,8 +10,10 @@ export default {
     InputField,
   },
   setup() {
-    const { orderStore } = useStore();
+    const { orderStore, cartStore } = useStore();
     const { orderResult, orderList, handleSendOrder } = orderStore;
+    const { cartData } = cartStore;
+    const userRemark = ref('');
     const phoneRegex = /09\d{2}-?\d{3}-?\d{3}/;
     const schema = Yup.object().shape({
       userName: Yup.string().trim().required('請輸入姓名'),
@@ -27,15 +29,25 @@ export default {
       userAddress: Yup.string().required('請輸入寄件地址'),
     });
 
-    function handleSubmit(data) {
+    function handleSubmit(data, { reset }) {
       console.log(data);
-      console.log(handleSendOrder());
+      const orderData = {
+        name: data.userName,
+        email: data.userEmail,
+        tel: data.userPhone,
+        address: data.userAddress,
+        message: userRemark.value,
+      };
+      handleSendOrder(orderData);
+      reset();
     }
     return {
       orderResult: computed(() => orderResult),
       orderList: computed(() => orderList),
       handleSubmit,
       schema,
+      userRemark,
+      cartListLength: computed(() => cartData.list.length),
     };
   },
 };
@@ -56,6 +68,10 @@ export default {
           type="text"
           label="訂購人姓名"
           placeholder="請輸入姓名"
+          :disabled="cartListLength === 0"
+          :class="{
+            'opacity-30 cursor-not-allowed': cartListLength === 0,
+          }"
         />
         <InputField
           name="userPhone"
@@ -63,6 +79,8 @@ export default {
           maxlength="10"
           label="訂購人電話"
           placeholder="請輸入電話"
+          :disabled="cartListLength === 0"
+          :class="{ 'opacity-30 cursor-not-allowed': cartListLength === 0 }"
         />
       </div>
       <InputField
@@ -70,21 +88,33 @@ export default {
         type="email"
         label="訂購人Email"
         placeholder="請輸入Email"
+        :disabled="cartListLength === 0"
+        :class="{ 'opacity-30 cursor-not-allowed': cartListLength === 0 }"
       />
       <InputField
         name="userAddress"
         type="text"
         label="訂購人地址"
         placeholder="請輸入地址"
+        :disabled="cartListLength === 0"
+        :class="{ 'opacity-30 cursor-not-allowed': cartListLength === 0 }"
       />
       <div>
-        <label for="userRemark" class="block mb-2">備註</label>
+        <label
+          for="userRemark"
+          class="block mb-2"
+          :class="{ 'opacity-30 cursor-not-allowed': cartListLength === 0 }"
+          >備註</label
+        >
         <textarea
           id="userRemark"
           name="userRemark"
-          class="border rounded py-2 w-full"
+          class="form-control w-full"
+          v-model="userRemark"
           rows="4"
           placeholder="想要告訴我們什麼？"
+          :disabled="cartListLength === 0"
+          :class="{ 'opacity-30 cursor-not-allowed': cartListLength === 0 }"
         ></textarea>
       </div>
 
@@ -92,8 +122,12 @@ export default {
         <button
           type="submit"
           class="w-10/12 rounded bg-black text-white grid place-content-center text-xl py-3 mx-auto transition duration-300 ease-in-out hover:bg-primary-dark"
+          :class="{
+            'opacity-30 cursor-not-allowed': cartListLength === 0,
+          }"
+          :disabled="cartListLength === 0"
         >
-          送出預訂資料
+          {{ cartListLength > 0 ? '送出預訂資料' : '目前購物車沒有商品' }}
         </button>
       </div>
     </Form>
