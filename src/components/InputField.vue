@@ -19,6 +19,19 @@ export default {
       type: String,
       required: true,
     },
+    size: {
+      type: String,
+      default: null,
+    },
+    pattern: {
+      type: String,
+    },
+    maxlength: {
+      type: String,
+    },
+    minlength: {
+      type: String,
+    },
     successMessage: {
       type: String,
       default: '',
@@ -53,23 +66,25 @@ export default {
 </script>
 
 <template>
-  <div
-    class="flex flex-col gap-2 justify-center w-full"
-    :class="{ 'border-danger-500': !!errorMessage, success: meta.valid }"
-  >
+  <div class="flex flex-col gap-2 justify-center flex-auto">
     <label :for="name">{{ label }}</label>
     <input
-      class="border rounded py-2 text-md"
+      class="form-control"
+      :class="{ 'bg-danger-100 ring-danger-500': errorMessage }"
       :name="name"
       :id="name"
       :type="type"
+      :size="size"
+      :pattern="pattern"
+      :maxlength="Number.parseInt(maxlength)"
+      :minlength="Number.parseInt(minlength)"
       :value="inputValue"
       :placeholder="placeholder"
       @input="handleChange"
       @blur="handleBlur"
     />
 
-    <p class="help-message" v-show="errorMessage || meta.valid">
+    <p class="text-danger-500" v-show="errorMessage || meta.valid">
       {{ errorMessage || successMessage }}
     </p>
   </div>
