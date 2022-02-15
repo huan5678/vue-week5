@@ -2,6 +2,7 @@
   "name": "week5",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://huan5678.github.io/vue-week5",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
