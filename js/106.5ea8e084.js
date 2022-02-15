@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkweek5"]=self["webpackChunkweek5"]||[]).push([[106],{3106:function(e,n,u){u.r(n),u.d(n,{default:function(){return f}});var r=u(6252);function t(e,n,u,t,c,s){return(0,r.wg)(),(0,r.iD)("h1",null,"這裡是HERO")}var c={setup(){(0,r.bv)((()=>{}))}},s=u(3744);const a=(0,s.Z)(c,[["render",t]]);var f=a}}]);
+//# sourceMappingURL=106.5ea8e084.js.map

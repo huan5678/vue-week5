@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkweek5"]=self["webpackChunkweek5"]||[]).push([[106],{3106:function(n,e,u){u.r(e),u.d(e,{default:function(){return s}});var t=u(6252);function r(n,e,u,r,c,f){return(0,t.wg)(),(0,t.iD)("h1",null,"這裡是HERO")}var c={setup:function(){(0,t.bv)((function(){}))}},f=u(3744);const i=(0,f.Z)(c,[["render",r]]);var s=i}}]);
+//# sourceMappingURL=106-legacy.7c5d67db.js.map
