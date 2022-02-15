@@ -7,4 +7,4 @@
 ## 額外使用套件
 
 - 使用 Vue FinalModal 取代原先的 modal 寫法
-- 使用 sweetalert2 來做 api 回饋提示
+<!-- - 使用 sweetalert2 來做 api 回饋提示 -->
